@@ -24,8 +24,8 @@ code = get_code()
 guess = []
 playing_game = True
 count = 0
-correct_colour = []
-correct_position = []
+correct_colour = 0
+correct_position = 0
 
 while playing_game:
     print(f"The board:")  # show the player's current board
@@ -53,27 +53,27 @@ while playing_game:
             # Correct colour in the incorrect position
             for peg in guess:
                 if peg in code:
-                    correct_colour.append(peg)
+                    correct_colour += 1
 
             # Correct colour in correct position
             for index, (a, b) in enumerate(zip(code, guess)):
                 if a == b:
-                    correct_position.append(guess[index])
-                    correct_colour.remove(guess[index])
+                    correct_position += 1
+                    correct_colour -= 1
 
             # Show player hints
-            print(f"# of correct colours: {len(correct_colour)}")
-            print(f"# of correct positions: {len(correct_position)}")
+            print(f"# of correct colours: {correct_colour}")
+            print(f"# of correct positions: {correct_position}")
 
             # Save player guess to board
             guess_copy = guess
-            guess_copy.append(len(correct_colour))
-            guess_copy.append(len(correct_position))
+            guess_copy.append(correct_colour)
+            guess_copy.append(correct_position)
             print(guess_copy)
             board.append(guess_copy)
             # Reset lists
-            correct_colour.clear()
-            correct_position.clear() 
+            correct_colour = 0
+            correct_position = 0 
         count += 1  # next turn
         print()
 # Game over
